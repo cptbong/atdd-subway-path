@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class StationController {
@@ -32,14 +33,20 @@ public class StationController {
         return new ResponseEntity<>(stationList, HttpStatus.OK);
     }
 
-    @GetMapping("/station/{stationName}")
-    public ResponseEntity findStation(@PathVariable("stationName") String stationName) {
+    @GetMapping("/station/{id}")
+    public ResponseEntity findStation(@PathVariable("id") Integer id) {
+        Optional<Station> persistStation = stationRepository.findById(Long.valueOf(id));
+        return new ResponseEntity<>(persistStation, HttpStatus.OK);
+    }
+
+    @GetMapping("/station")
+    public ResponseEntity findStation(@RequestParam("name") String stationName) {
         Station persistStation = stationRepository.findByStationName(stationName);
         return new ResponseEntity<>(persistStation, HttpStatus.OK);
     }
 
-    @DeleteMapping("/station/{stationName}")
-    public ResponseEntity deleteStation(@PathVariable("stationName") String stationName) {
+    @DeleteMapping("/station")
+    public ResponseEntity deleteStation(@RequestParam("name") String stationName) {
         try {
             Station persistStation = stationRepository.findByStationName(stationName);
             stationRepository.deleteById(persistStation.getId());

@@ -100,7 +100,7 @@ Then "강남역" 지하철역이 삭제되었다.
         Then "강남역" 지하철역이 삭제되었다.
 
          */
-        webTestClient.delete().uri("/station/강남역")
+        webTestClient.delete().uri("/station?name=강남역")
                 .exchange()
                 .expectStatus().isOk();
     }
