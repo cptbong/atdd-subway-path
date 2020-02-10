@@ -95,9 +95,6 @@ Then "강남역" 지하철역이 삭제되었다.
          */
         webTestClient.delete().uri("/station/강남역")
                 .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody().isEmpty();
-
+                .expectStatus().isOk();
     }
 }

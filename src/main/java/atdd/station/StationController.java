@@ -33,8 +33,21 @@ public class StationController {
     }
 
     @GetMapping("/station/{stationName}")
-    public ResponseEntity findStations(@PathVariable("stationName") String stationName) {
+    public ResponseEntity findStation(@PathVariable("stationName") String stationName) {
         Station persistStation = stationRepository.findByStationName(stationName);
         return new ResponseEntity<>(persistStation, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/station/{stationName}")
+    public ResponseEntity deleteStation(@PathVariable("stationName") String stationName) {
+        try {
+            Station persistStation = stationRepository.findByStationName(stationName);
+            stationRepository.deleteById(persistStation.getId());
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
     }
 }
