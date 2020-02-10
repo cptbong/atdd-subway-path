@@ -79,11 +79,18 @@ Then "강남역" 지하철역이 삭제되었다.
         Then 사용자는 "강남역" 지하철역의 정보를 응답받는다.
 
          */
-        webTestClient.get().uri("/station/강남역")
+        webTestClient.get().uri("/station?name=강남역")
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody().jsonPath("$.name").isEqualTo(stationName);
+
+        webTestClient.get().uri("/station/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody().jsonPath("$.name").isEqualTo(stationName);
+
 
         /*
 
